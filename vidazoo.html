@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <div style="background: lightblue; height: 1000px;">
+      <div style="height: 350px; width: 400px; background-color: green;">
+        <script>
+           var vidazooAdImpressionCallback = (cpm: any, info: any) => {
+            console.warn(`AD Impression with CPM: ${cpm}`);
+            console.warn('vidazooAdImpressionCallback info', info);
+            console.log(`Net Revenue/CPM After Fees: ${info.netCpm - info.adServingFee}`);
+
+            // create custom ad impression event for listen when is fired
+            const vidazooAdImpressionCallback = new CustomEvent('vidazooAdImpressionCallback', {});
+            document.dispatchEvent(vidazooAdImpressionCallback);
+          };
+          
+           document.addEventListener('vidazooAdImpressionCallback', () => {
+             console.warn('vidazooAdImpressionCallback done');
+          });
+        </script>  
+        <script
+          defer
+          src="https://static.vidazoo.com/basev/vwpt.js"
+          data-widget-id="603f78925fcd980004c9822a"
+          data-on-widget-ad-impression="vidazooAdImpressionCallback"
+        ></script>
+      </div>
+    </div>
+  </body>
+</html>
