@@ -9,7 +9,8 @@
     <div style="background: lightblue; height: 1000px;">
       <div style="height: 350px; width: 400px; background-color: green;">
         <script>
-           var vidazooAdImpressionCallback = (cpm, info) => {
+           window.AP = {};
+           window.AP.vidazooAdImpressionCallback = (cpm, info) => {
             console.warn(`AD Impression with CPM: ${cpm}`);
             console.warn('vidazooAdImpressionCallback info', info);
             console.log(`Net Revenue/CPM After Fees: ${info.netCpm - info.adServingFee}`);
@@ -27,7 +28,7 @@
           defer
           src="https://static.vidazoo.com/basev/vwpt.js"
           data-widget-id="603f78925fcd980004c9822a"
-          data-on-widget-ad-impression="vidazooAdImpressionCallback"
+          data-on-widget-ad-impression="AP.vidazooAdImpressionCallback"
         ></script>
       </div>
     </div>
