@@ -2,16 +2,6 @@
 
 You can use the [editor on GitHub](https://github.com/andreyYatskov/andreyYatskov.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
 
- <div style="background: lightblue; height: 1000px;">
-      <div style="height: 350px; width: 400px; background-color: green;">
-        <script
-          defer
-          src="https://static.vidazoo.com/basev/vwpt.js"
-          data-widget-id="603f78925fcd980004c9822a"
-        ></script>
-    </div>
-  </div>
-
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
 ### Markdown
