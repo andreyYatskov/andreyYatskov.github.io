@@ -9,7 +9,7 @@
     <div style="background: lightblue; height: 1000px;">
       <div style="height: 350px; width: 400px; background-color: green;">
         <script>
-           var vidazooAdImpressionCallback = (cpm: any, info: any) => {
+           var vidazooAdImpressionCallback = (cpm, info) => {
             console.warn(`AD Impression with CPM: ${cpm}`);
             console.warn('vidazooAdImpressionCallback info', info);
             console.log(`Net Revenue/CPM After Fees: ${info.netCpm - info.adServingFee}`);
