@@ -18,8 +18,9 @@
        </div>
        <script>
         function applyWidth() {
-         document.querySelector('.wrap').style.width =   document.getElementById("input-width").value + 'px';
-         window.APESTER.reload();
+          document.querySelector('.wrap').style.width =   document.getElementById("input-width").value + 'px';
+          window.APESTER.apesterElements = [];
+          window.APESTER.reload();
         }
       </script>
     </div>
