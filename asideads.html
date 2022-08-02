@@ -19,6 +19,7 @@
        <script>
         function applyWidth() {
           document.querySelector('.wrap').style.width =   document.getElementById("input-width").value + 'px';
+          document.querySelector('.apester-media').innerHTML = '';
           window.APESTER.apesterElements = [];
           window.APESTER.reload();
         }
