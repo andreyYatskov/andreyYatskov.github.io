@@ -12,13 +12,13 @@
       <input type="number" id="input-width" name="widht" min="320" value="700">
       <button onclick="applyWidth()">Apply</button>
       <div style="width: 700px; background-color: green; min-height: 400px; margin-top: 20px" class="wrap">
-        <div class="apester-media" data-media-id="62e7bf229456c8002a38e078"></div>
+        <div class="apester-media" data-media-id="6286216e86eec30026ea36ba"></div>
         <script type="module" src="https://sdk.andrey.apester.dev/web-sdk.core.min.js"></script>
         <script nomodule src="https://sdk.andrey.apester.dev/web-sdk.core.legacy.min.js" async></script>
        </div>
        <script>
         function applyWidth() {
-          document.querySelector('.wrap').style.width =   document.getElementById("input-width").value + 'px';
+          document.querySelector('.wrap').style.width = document.getElementById("input-width").value + 'px';
           document.querySelector('.apester-media').innerHTML = '';
           window.APESTER.apesterElements = [];
           window.APESTER.reload();
