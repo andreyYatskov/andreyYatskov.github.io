@@ -73,7 +73,7 @@
       var pbjs = pbjs || {};
       pbjs.que = pbjs.que || [];
       var iiqCallbackMethod = function (eids) {
-      	console.warn('iiqCallbackMethod eids: ', eids);
+      	console.warn('global iiqCallbackMethod eids: ', eids);
       	if (!isPrebidInited) {
       		// ------------Start prebid configuration------
       		pbjs.que.push(function () {
@@ -124,7 +124,7 @@
       	} : {}
       );
 
-      console.warn('IntentIqObjectData', IntentIqObjectData);
+      console.warn('global IntentIqObjectData', IntentIqObjectData);
       var intentIq_868716177 = new IntentIqObject(IntentIqObjectData);
     </script>
     <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -142,35 +142,37 @@
       <div style="background: lightgreen; height: 50vh;"> 
         <div id="test-magnite-ad"></div>
         <script>
-          pbjs.que.push(() => {
-            pbjs.ppi.requestBids([
-              {
-                hbInventory: {
-                  values: { name: "/57806026/nadav_rnd_test" },
-                  type: "AUPSlotPath",
-                  sizes: [
-                    [300, 50],
-                    [320, 50],
-                    [300, 75],
-                    [300, 100],
-                    [320, 100],
-                    [200, 200],
-                    [250, 250],
-                    [300, 250],
-                    [300, 300]
-                  ]
-                },
-                hbSource: {
-                  type: "auction",
-                  values: { amazonEnabled: true }
-                },
-                hbDestination: {
-                  type: "gpt",
-                  values: { div: "test-magnite-ad" }
+          window.addEventListener("load", function (event) {
+            pbjs.que.push(() => {
+              pbjs.ppi.requestBids([
+                {
+                  hbInventory: {
+                    values: { name: "/57806026/nadav_rnd_test" },
+                    type: "AUPSlotPath",
+                    sizes: [
+                      [300, 50],
+                      [320, 50],
+                      [300, 75],
+                      [300, 100],
+                      [320, 100],
+                      [200, 200],
+                      [250, 250],
+                      [300, 250],
+                      [300, 300]
+                    ]
+                  },
+                  hbSource: {
+                    type: "auction",
+                    values: { amazonEnabled: true }
+                  },
+                  hbDestination: {
+                    type: "gpt",
+                    values: { div: "test-magnite-ad" }
+                  }
                 }
-              }
-            ]);
-          });
+              ]);
+            });
+          });  
         </script>
       </div>  
     </div>
