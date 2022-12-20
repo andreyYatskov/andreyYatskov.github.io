@@ -123,7 +123,27 @@
       	abPercentage: abPercentage
       	} : {}
       );
+      
+      var googletag = googletag || {};
+      googletag.cmd = googletag.cmd || [];
 
+      googletag.cmd.push(function () {
+        googletag.pubads().disableInitialLoad();
+        googletag.pubads().enableSingleRequest();
+        googletag.pubads().enableAsyncRendering();
+        googletag.pubads().collapseEmptyDivs(true);
+        googletag.enableServices();
+      });
+      
+      pbjs.que.push(function () {
+        pbjs.onEvent('auctionEnd', function (auction) {
+          console.warn('global Magnite auction end:', auction);
+        });
+        pbjs.onEvent('bidWon', function preBidCallback(bid) {
+          console.warn('global Magnite bidWon:', bid);
+        });
+      });
+      
       console.warn('global IntentIqObjectData', IntentIqObjectData);
       var intentIq_868716177 = new IntentIqObject(IntentIqObjectData);
     </script>
