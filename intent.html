@@ -5,6 +5,129 @@
   <head>
     <title>Test page for Intent IQ</title>
     <meta charset="UTF-8" />
+    <script
+      async
+      src="https://www.googletagservices.com/tag/js/gpt.js"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></script>
+    <script
+      async
+      src="https://c.amazon-adsystem.com/aax2/apstag.js"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></script>
+    <script
+      async
+      src="https://micro.rubiconproject.com/prebid/dynamic/17178.js?subid1=github_io"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></script>
+    <script
+      src="https://iiq-be-js-sdk.s3.amazonaws.com/GA/UniversalID/IIQUniversalID.js"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></script>
+    <script type="text/javascript">
+      var maximumPrebidDelayTimeout = 500;
+      var isPrebidInited = false;
+
+      var amazonConfig = {
+      	adServer: 'googletag',
+      	bidTimeout: 1600, // set the desired timeout here
+      	gdpr: { cmpTimeout: 8000 }, // set the desired timeout here
+      	params: { us_privacy: '' },
+      	pubID: 'f67fb912-2d88-4326-8009-bd2154299562', // your unique Publisher ID
+      };
+
+      // amazon's apstag initialization
+      var q = function (c, r) {
+      	apstag._Q.push([c, r]);
+      };
+
+      var apstag = apstag || {
+      	init() {
+      		// eslint-disable-next-line
+      		q('i', arguments);
+      	},
+      	fetchBids() {
+      		// eslint-disable-next-line
+      		q('f', arguments);
+      	},
+      	setDisplayBids() {},
+      	targetingKeys() {
+      		return [];
+      	},
+      	_Q: [],
+      };
+
+      var getPubId = function() {
+      	return [{
+      		source: "domain.com",
+      		uids: [{
+      			id: "my-user-id",
+      			atype: 1,
+      			ext: {
+      				stype: "ppuid"
+      			}
+      		}]
+      	}]
+      };
+
+      var pbjs = pbjs || {};
+      pbjs.que = pbjs.que || [];
+      var iiqCallbackMethod = function (eids) {
+      	console.warn('iiqCallbackMethod eids: ', eids);
+      	if (!isPrebidInited) {
+      		// ------------Start prebid configuration------
+      		pbjs.que.push(function () {
+      			const rubiconConfig = pbjs.getConfig('rubicon') || {};
+      			rubiconConfig.fpkvs = {
+      				a_b_test: ""
+      				ad_unit_position: "co"
+      				apester_campaign_id: "6267e4722559f9002ce9f2cb"
+      				apester_unit_type: "playlist"
+      				article_url: "http://apester.test.page.com/"
+      				browser: "chrome"
+      				browser_version: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.61 Safari/537.36"
+      				channel_id: "6260232ee77fbd002c6e7778"
+      				engine: "story"
+      				interaction_id: "62724cae24b6300091e0fc8c"
+      				os: "macOS"
+      				sdk_version: ""
+      				subid1: "local_com"
+      			}
+      			pbjs.setConfig({
+      				rubicon: rubiconConfig,
+      				userSync: {
+      					userIds: [{
+      						name: 'pubProvidedId',
+      						params: {
+      							eidsFunction: getPubId
+      						}
+      					}]
+      				}
+      			});
+      		});
+
+      		apstag.init(amazonConfig);
+      		isPrebidInited = true;
+      		// --------End prebid configuration ----
+      	}
+      };
+
+      var abPercentage = 100;
+      var IntentIqObjectData = Object.assign({
+      	partner: 868716177,
+      	pbjs: pbjs,
+      	callback: iiqCallbackMethod,
+      	timeoutInMillis: maximumPrebidDelayTimeout,
+      }, abPercentage && abPercentage < 100 ? {
+      	ABTestingConfigurationSource: 'percentage',
+      	abPercentage: abPercentage
+      	} : {}
+      );
+
+      console.warn('IntentIqObjectData', IntentIqObjectData);
+      var intentIq_868716177 = new IntentIqObject(IntentIqObjectData);
+    </script>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
   </head>
 
   <body>
@@ -16,6 +139,40 @@
         
         <script type="module" src="https://sdk.andrey.apester.dev/web-sdk.core.min.js"></script>
         <script nomodule src="https://sdk.andrey.apester.dev/web-sdk.core.legacy.min.js" async></script>
+      <div style="background: lightgreen; height: 50vh;"> 
+        <div id="test-magnite-ad"></div>
+        <script>
+          pbjs.que.push(() => {
+            pbjs.ppi.requestBids([
+              {
+                hbInventory: {
+                  values: { name: "/57806026/nadav_rnd_test" },
+                  type: "AUPSlotPath",
+                  sizes: [
+                    [300, 50],
+                    [320, 50],
+                    [300, 75],
+                    [300, 100],
+                    [320, 100],
+                    [200, 200],
+                    [250, 250],
+                    [300, 250],
+                    [300, 300]
+                  ]
+                },
+                hbSource: {
+                  type: "auction",
+                  values: { amazonEnabled: true }
+                },
+                hbDestination: {
+                  type: "gpt",
+                  values: { div: "test-magnite-ad" }
+                }
+              }
+            ]);
+          });
+        </script>
+      </div>  
     </div>
   </body>
 </html>
