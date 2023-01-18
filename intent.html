@@ -58,6 +58,7 @@
       };
 
       var getPubId = function() {
+        console.warn('getPubId is call
       	return [{
       		source: "domain.com",
       		uids: [{
@@ -103,7 +104,7 @@
       					userIds: [{
       						name: 'pubProvidedId',
       						params: {
-      							eidsFunction: getPubId
+      							eidsFunction: window.getPubId
       						}
       					}]
       				}
