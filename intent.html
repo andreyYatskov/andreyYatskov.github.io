@@ -150,9 +150,18 @@
         });
       });
       
-      console.warn('global IntentIqObjectData', IntentIqObjectData);
+      //console.warn('global IntentIqObjectData', IntentIqObjectData);
       //iiqCallbackMethod('rrr');
-      var intentIq_868716177 = new IntentIqObject(IntentIqObjectData);
+      // var intentIq_868716177 = new IntentIqObject(IntentIqObjectData);
+      var intentIq_1234567 = new IntentIqObject({
+	      partner: 1234567,
+	      callback: iiqCallbackMethod,
+        timeoutInMillis: maximumPrebidDelayTimeout,
+	      ABTestingConfigurationSource: 'percentage',
+	      abPercentage: 95,
+	      manualWinReportEnabled: true,
+	      domainName:'currentDomain.com'
+      });
     </script>
     <meta name="referrer" content="strict-origin-when-cross-origin">
   </head>
