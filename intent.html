@@ -118,7 +118,7 @@
       	}
       };
 
-      var abPercentage = 100;
+      /*var abPercentage = 100;
       var IntentIqObjectData = Object.assign({
       	partner: 868716177,
       	pbjs: pbjs,
@@ -128,7 +128,7 @@
       	ABTestingConfigurationSource: 'percentage',
       	abPercentage: abPercentage
       	} : {}
-      );
+      );*/
       
       var googletag = googletag || {};
       googletag.cmd = googletag.cmd || [];
@@ -153,15 +153,15 @@
       //console.warn('global IntentIqObjectData', IntentIqObjectData);
       //iiqCallbackMethod('rrr');
       // var intentIq_868716177 = new IntentIqObject(IntentIqObjectData);
+			
       var intentIq_1234567 = new IntentIqObject({
-				pbjs: pbjs,
 				partner: 1234567,
-	      callback: iiqCallbackMethod,
+				callback: iiqCallbackMethod,
         timeoutInMillis: maximumPrebidDelayTimeout,
-	      ABTestingConfigurationSource: 'percentage',
-	      abPercentage: 95,
-	      manualWinReportEnabled: true,
-	      domainName:'andreyyatskov.github.io'
+				ABTestingConfigurationSource: 'percentage',
+				abPercentage: 95,
+				manualWinReportEnabled: true,
+				domainName:'currentDomain.com'
       });
     </script>
     <meta name="referrer" content="strict-origin-when-cross-origin">
