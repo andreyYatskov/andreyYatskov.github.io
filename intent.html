@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -71,6 +73,7 @@
 
       var pbjs = pbjs || {};
       pbjs.que = pbjs.que || [];
+      
       var iiqCallbackMethod = function (eids) {
         console.warn('global iiqCallbackMethod eids: ', eids);
         var allEids = getPubId().concat(eids.eids)
@@ -78,6 +81,20 @@
         if (!isPrebidInited) {
           // ------------Start prebid configuration------
           pbjs.que.push(function () {
+            var tdid = allEids.filter(x => x.source === 'adserver.org')[0];
+
+            allEids = allEids.filter(x => x.source != 'adserver.org');
+            if (tdid) {
+              pbjs.setConfig({
+                userSync: {
+                  userIds: [{
+                    name: "unifiedId",
+                    value: { "tdid": tdid.uids[0].id }
+                  }]
+                }
+              });
+              pbjs.refreshUserIds();
+            }
             const rubiconConfig = pbjs.getConfig('rubicon') || {};
             rubiconConfig.fpkvs = {
               a_b_test: "",
@@ -110,7 +127,7 @@
             pbjs.refreshUserIds();
 
             pbjs.setConfig({
-                rubicon: rubiconConfig
+              rubicon: rubiconConfig
             });
           });
 
@@ -118,7 +135,7 @@
           isPrebidInited = true;
           // --------End prebid configuration ----
         }
-			};
+      };
       
       var googletag = googletag || {};
       googletag.cmd = googletag.cmd || [];
