@@ -67,6 +67,13 @@
           console.log("on afterDefineSlot", adUnitInstanceCode, slot);
         });
       });
+      
+      setInterval(() => {
+        console.log("30 sec refresh");
+        window.ayManagerEnv.cmd.push(() => {
+          window.ayManagerEnv.refresh(["/57806026/nadav_rnd_test"]);
+        });
+      }, 30000);
 
       window.shouldShowAd = function () {
         return false;
