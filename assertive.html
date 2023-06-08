@@ -39,7 +39,7 @@
           }
         }
       };
-
+      var adUnitCode;
       window.ayManagerEnv = window.ayManagerEnv || { cmd: [] };
       window.ayManagerEnv.debug = true;
       window.ayManagerEnv.cmd.push(() => {
@@ -61,6 +61,8 @@
 
         window.ayManagerEnv.onEvent("beforeDefineSlot", (adUnitInstanceCode, slot) => {
           console.log("on beforeDefineSlot", adUnitInstanceCode, slot);
+          adUnitCode = adUnitInstanceCode;
+          slot.size = [[300, 250]];
         });
 
         window.ayManagerEnv.onEvent("afterDefineSlot", (adUnitInstanceCode, slot) => {
@@ -72,7 +74,7 @@
         console.log("30 sec refresh");
         window.ayManagerEnv.cmd.push(() => {
           // window.ayManagerEnv.refresh(["/57806026/nadav_rnd_test"]);
-          window.ayManagerEnv.refresh(["ad-Billboard__ayManagerEnv__4"]);
+          window.ayManagerEnv.refresh([adUnitCode]);
         });
       }, 30000);
 
