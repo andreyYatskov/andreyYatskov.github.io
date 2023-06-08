@@ -71,10 +71,10 @@
       });
       
       setInterval(() => {
-        console.log("30 sec refresh");
+        console.log("30 sec refresh for", adUnitCode);
         window.ayManagerEnv.cmd.push(() => {
           // window.ayManagerEnv.refresh(["/57806026/nadav_rnd_test"]);
-          window.ayManagerEnv.refresh([adUnitCode]);
+          window.ayManagerEnv.refresh([adUnitCode], { useInstanceCodes: true });
         });
       }, 30000);
 
