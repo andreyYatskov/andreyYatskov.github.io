@@ -40,6 +40,7 @@
        <script>
         let width = document.getElementById("input-width").value;
         const apesterMediaElement = document.querySelector('.apester-media');
+        const videoContainer = document.querySelector('.container-video');
         function apply() {
           if (width !== document.getElementById("input-width").value) {
             width = document.getElementById("input-width").value;
@@ -51,10 +52,12 @@
             window.APESTER.reload();
           } else {
             const sizes = window.getVideoAdSize(apesterMediaElement, true);
-            const { width, height } = adSize;
+            const { width, height } = sizes;
             console.warn('sizes', sizes);
             console.warn('apesterPlayer', window.apesterPlayer);
             window.apesterPlayer.resize(width, height);
+            videoContainer.style.width = width + 'px';
+            videoContainer.style.height = height + 'px';
           }
         };
       </script>
