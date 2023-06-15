@@ -51,10 +51,11 @@
             window.APESTER.reload();
           } else {
             const sizes = window.getVideoAdSize(apesterMediaElement, true);
+            const { width, height } = adSize;
             console.warn('sizes', sizes);
             console.warn('apesterPlayer', window.apesterPlayer);
-            window.apesterPlayer.resize(sizes);
-          }  
+            window.apesterPlayer.resize(width, height);
+          }
         };
       </script>
     </div>
