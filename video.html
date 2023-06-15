@@ -40,7 +40,6 @@
        <script>
         let width = document.getElementById("input-width").value;
         const apesterMediaElement = document.querySelector('.apester-media');
-        const videoContainer = document.querySelector('.container-video');
         function apply() {
           if (width !== document.getElementById("input-width").value) {
             width = document.getElementById("input-width").value;
@@ -56,6 +55,7 @@
             console.warn('sizes', sizes);
             console.warn('apesterPlayer', window.apesterPlayer);
             window.apesterPlayer.resize(width, height);
+            const videoContainer = document.querySelector('.container-video');
             videoContainer.style.width = width + 'px';
             videoContainer.style.height = height + 'px';
           }
