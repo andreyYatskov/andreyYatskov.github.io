@@ -40,50 +40,16 @@
         }
       };
       var adUnitCode;
-      window.ayManagerEnv = window.ayManagerEnv || { cmd: [] };
+      window.ayManagerEnv = window.ayManagerEnv || 
+      { 
+        cmd: [], 
+        settings: { prebidSettings : {ccc: 33 } }
+      };
       window.ayManagerEnv.debug = true;
       window.ayManagerEnv.cmd.push(() => {
         console.log(
           "Yield Manager script finally loads"
         );
-        ayManagerEnv.settings.prebidSettings = JSON.stringify({
-            "bidderTimeout": 3000,
-            "priceGranularity": "high",
-            "enableSendAllBids": false,
-            "userSync": {
-                "filterSettings": {
-                    "iframe": {
-                        "bidders": "*",
-                        "filter": "include"
-                    }
-                }
-            },
-            "schain": {
-                "validation": "strict",
-                "config": {
-                    "ver": "1.0",
-                    "complete": 1,
-                    "nodes": [
-                        {
-                            "asi": "apester.com",
-                            "sid": "ddddd",
-                            "hp": 1
-                        }
-                    ]
-                }
-            },
-            "consentManagement": {
-                "gdpr": {
-                    "cmpApi": "iab",
-                    "timeout": 8000,
-                    "allowAuctionWithoutConsent": true
-                }
-            },
-            "improvedigital": {
-                "usePrebidSizes": true
-            }
-        });
-
         window.ayManagerEnv.onEvent("error", (err) => {
           console.log("on error", err);
         });
