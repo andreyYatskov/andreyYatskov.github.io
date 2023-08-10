@@ -47,44 +47,42 @@
           "Yield Manager script finally loads"
         );
         ayManagerEnv.settings.prebidSettings = {
-             {
-                "bidderTimeout": 3000,
-                "priceGranularity": "high",
-                "enableSendAllBids": false,
-                "userSync": {
-                    "filterSettings": {
-                        "iframe": {
-                            "bidders": "*",
-                            "filter": "include"
-                        }
+            "bidderTimeout": 3000,
+            "priceGranularity": "high",
+            "enableSendAllBids": false,
+            "userSync": {
+                "filterSettings": {
+                    "iframe": {
+                        "bidders": "*",
+                        "filter": "include"
                     }
-                },
-                "schain": {
-                    "validation": "strict",
-                    "config": {
-                        "ver": "1.0",
-                        "complete": 1,
-                        "nodes": [
-                            {
-                                "asi": "apester.com",
-                                "sid": "ddddd",
-                                "hp": 1
-                            }
-                        ]
-                    }
-                },
-                "consentManagement": {
-                    "gdpr": {
-                        "cmpApi": "iab",
-                        "timeout": 8000,
-                        "allowAuctionWithoutConsent": true
-                    }
-                },
-                "improvedigital": {
-                    "usePrebidSizes": true
                 }
+            },
+            "schain": {
+                "validation": "strict",
+                "config": {
+                    "ver": "1.0",
+                    "complete": 1,
+                    "nodes": [
+                        {
+                            "asi": "apester.com",
+                            "sid": "ddddd",
+                            "hp": 1
+                        }
+                    ]
+                }
+            },
+            "consentManagement": {
+                "gdpr": {
+                    "cmpApi": "iab",
+                    "timeout": 8000,
+                    "allowAuctionWithoutConsent": true
+                }
+            },
+            "improvedigital": {
+                "usePrebidSizes": true
             }
-          }
+        }
 
         window.ayManagerEnv.onEvent("error", (err) => {
           console.log("on error", err);
