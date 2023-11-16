@@ -136,7 +136,6 @@
     }
 
     window.document.body.appendChild(interactionElement);
-    window.document.body.appendChild(infoElement);
 
     if (isInitFromEvent) {
       window.APESTER.reload();
