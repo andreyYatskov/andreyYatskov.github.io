@@ -57,8 +57,6 @@
   const init = (inAppParams, isInitFromEvent) => {
     const params = inAppParams || getParamsFromUrl();
 
-    document.querySelector('.inAppParams').innerHTML = JSON.stringify(inAppParams);
-    document.querySelector('.getParamsFromUrl').innerHTML = JSON.stringify(getParamsFromUrl());
     const {
       mediaId = getMediaIdFromPath(),
       channelToken,
