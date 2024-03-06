@@ -73,7 +73,7 @@
         function apply() {
           const channelToken = document.getElementById("input-channel").value;
           const os = document.getElementById("os").value;
-          const platform = document.getElementById("os").value;
+          const platform = document.getElementById("platform").value;
           const isWebview = document.querySelector(`#isWebview`).checked
           window.location = `?channelToken=${channelToken}&fallback=true&isWebview=${isWebview}&os=${os}&platform=${platform}`;
         }
