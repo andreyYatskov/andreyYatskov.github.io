@@ -53,6 +53,7 @@
           // If this event doesn't fire, try clearing local storage and refreshing
           // the page.
           googletag.pubads().addEventListener("slotOnload", function (event) {
+            console.warn('slotOnload', event.slot);
             if (interstitialSlot === event.slot) {
               document.getElementById("link").style.display = "block";
               document.getElementById("status").textContent = "Interstitial is loaded.";
