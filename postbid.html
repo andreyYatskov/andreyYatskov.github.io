@@ -7,78 +7,77 @@
   </head>
 
   <body>
-    <div style="background: lightblue; height: 1000px;">
-      <h2>Postbid sample</h2>
-      <script>
-        // Defines Prebid and its command queue
-        var pbjs = pbjs || {};
-        pbjs.que = pbjs.que || [];
+    <h2>Postbid sample</h2>
+    
+    <script>
+      // Defines Prebid and its command queue
+      var pbjs = pbjs || {};
+      pbjs.que = pbjs.que || [];
 
-        /**
-         * ! NOTE: The below adUnit values are examples.
-         * please work with your Magnite Account Lead to ensure that the values
-         * within your Demand Manager configuration for this Postbid tag to wor
-         */
+      /**
+       * ! NOTE: The below adUnit values are examples.
+       * please work with your Magnite Account Lead to ensure that the values
+       * within your Demand Manager configuration for this Postbid tag to wor
+       */
 
-        var adUnitName = '300x250_InUnit_130524';
-        var adUnitSizes = [
-            { w: 300, h: 250 },
-            { w: 300, h: 600 }
-        ];
+      var adUnitName = '300x250_InUnit_130524';
+      var adUnitSizes = [
+          { w: 300, h: 250 },
+          { w: 300, h: 600 }
+      ];
 
-        // Dynamically inserts Postbid iframe into Postbid tag
-        var iframe = document.createElement('iframe');
-        iframe.setAttribute('id', adUnitName);
-        iframe.setAttribute('FRAMEBORDER', '0');
-        iframe.setAttribute('SCROLLING', 'no');
-        iframe.setAttribute('MARGINHEIGHT', '0');
-        iframe.setAttribute('MARGINWIDTH', '0');
-        iframe.setAttribute('TOPMARGIN', '0');
-        iframe.setAttribute('LEFTMARGIN', '0');
-        iframe.setAttribute('ALLOWTRANSPARENCY', 'true');
-        iframe.setAttribute('WIDTH', '0');
-        iframe.setAttribute('HEIGHT', '0');
-        document.body.appendChild(iframe);
-   
-        // Fires the contained code when Prebid is ready
-        pbjs.que.push(function() {
+      // Dynamically inserts Postbid iframe into Postbid tag
+      var iframe = document.createElement('iframe');
+      iframe.setAttribute('id', adUnitName);
+      iframe.setAttribute('FRAMEBORDER', '0');
+      iframe.setAttribute('SCROLLING', 'no');
+      iframe.setAttribute('MARGINHEIGHT', '0');
+      iframe.setAttribute('MARGINWIDTH', '0');
+      iframe.setAttribute('TOPMARGIN', '0');
+      iframe.setAttribute('LEFTMARGIN', '0');
+      iframe.setAttribute('ALLOWTRANSPARENCY', 'true');
+      iframe.setAttribute('WIDTH', '0');
+      iframe.setAttribute('HEIGHT', '0');
+      document.body.appendChild(iframe);
+ 
+      // Fires the contained code when Prebid is ready
+      pbjs.que.push(function() {
 
-            // Requests bids from Demand Manager -- callback function fires on 
-            pbjs.rp.requestBids({
-                slotMap: [
-                    { name: adUnitName, sizes: adUnitSizes }
-                ],
-                callback: function() {
+          // Requests bids from Demand Manager -- callback function fires on 
+          pbjs.rp.requestBids({
+              slotMap: [
+                  { name: adUnitName, sizes: adUnitSizes }
+              ],
+              callback: function() {
 
-                    // Gets Postbid iframe
-                    var iframe = document.getElementById(adUnitName);
-                    var iframeDoc = iframe.contentWindow.document;
+                  // Gets Postbid iframe
+                  var iframe = document.getElementById(adUnitName);
+                  var iframeDoc = iframe.contentWindow.document;
 
-                    // Gets any ad server targeting key/values from auction
-                    var adServerTargeting = pbjs.getAdserverTargetingForAdUnitCode(adUnitName);
-                    console.log('pbjs', pbjs);
-                    console.log('adServerTargeting', adServerTargeting);
-                    // Renders ad if bidders return any creatives
-                    if (adServerTargeting && adServerTargeting['hb_adid']) {
-                        pbjs.renderAd(iframeDoc, adServerTargeting['hb_adid']);
-                    } else {
-                        // Else renders the passback HTML tag
-                        iframe.width = adUnitSizes[0].w;
-                        iframe.height = adUnitSizes[0].h;
-                        iframeDoc.write('<head></head><body>' + passbackTagHtml + '</body>');
-                        iframeDoc.close();
-                    }
-                }
-            });
-        });
+                  // Gets any ad server targeting key/values from auction
+                  var adServerTargeting = pbjs.getAdserverTargetingForAdUnitCode(adUnitName);
+                  console.log('pbjs', pbjs);
+                  console.log('adServerTargeting', adServerTargeting);
+                  // Renders ad if bidders return any creatives
+                  if (adServerTargeting && adServerTargeting['hb_adid']) {
+                      pbjs.renderAd(iframeDoc, adServerTargeting['hb_adid']);
+                  } else {
+                      // Else renders the passback HTML tag
+                      iframe.width = adUnitSizes[0].w;
+                      iframe.height = adUnitSizes[0].h;
+                      iframeDoc.write('<head></head><body>' + passbackTagHtml + '</body>');
+                      iframeDoc.close();
+                  }
+              }
+          });
+      });
 
-        /**
-         * ! NOTE: Define your passback HTML tag below.
-         */
+      /**
+       * ! NOTE: Define your passback HTML tag below.
+       */
 
-        var passbackTagHtml = 'Passback Tag';
-         
-      </script>
-    </div>
+      var passbackTagHtml = 'Passback Tag';
+       
+    </script>
   </body>
 </html>
