@@ -20,8 +20,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Web Interstitial Ad Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <script>
+      const CC = window.CookieConsent;
+      const cc = new CC({
+        //...options,
+        type   : "categories"
+      });
+      cc.on( "initialized", ( ...args ) => console.log( args ) );
+      cc.on( "error", console.error );
+      cc.on( "popupOpened", () => console.log( "Popup Open" ) );
+      cc.on( "popupClosed", () => console.log( "Popup Closed" ) );
+      cc.on( "revokeChoice", () => console.log( "Popup Reset" ) );
+      cc.on( "statusChanged", ( ...args ) => console.log( args ) );
+     
       window.googletag = window.googletag || { cmd: [] };
 
       // GPT ad slots
