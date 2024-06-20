@@ -8,72 +8,105 @@
 
   <body>
     <h2>Postbid sample</h2>
+    <div style="margin: 10px 0">
+        <label for="scriptURL">Postbid script URL:</label>
+        <input type="text" id="input-scriptURL" name="scriptURL" value="https:////ads.rubiconproject.com/prebid/17178_fcinter1908_it.js" style="width: 320px">
+    </div>
+    <div style="margin: 10px 0">
+        <label for="adUnitName">Ad unit name:</label>
+        <input type="text" id="input-adUnitName" name="adUnitName" value="Postbid_300x250" style="width: 320px">
+    </div>
+    <button onclick="apply()">Apply</button>
     
     <script>
-      // Defines Prebid and its command queue
-      var pbjs = pbjs || {};
-      pbjs.que = pbjs.que || [];
+      var scriptId = 'postbid-script';
+      var adUnitName;
 
-      /**
-       * ! NOTE: The below adUnit values are examples.
-       * please work with your Magnite Account Lead to ensure that the values
-       * within your Demand Manager configuration for this Postbid tag to wor
-       */
+      function apply() {
+        var scriptElement = document.getElementById(scriptId);
+        var oldIframe = adUnitName && document.getElementById(adUnitName);
+        if (oldIframe) {
+            oldIframe.remove();
+        }
+      
+        if (scriptElement) {
+            scriptElement.remove();
+        }
+        var scriptURL = document.getElementById("input-scriptURL").value;
+        var element = window.document.createElement('script');
 
-      var adUnitName = '/OurMCM,PubAccount/Domain_Desktop_320x50_Bottomad_date_guy';
-      var adUnitSizes = [
-          { w: 320, h: 50 },
-          { w: 300, h: 50 },
-          { w: 300, h: 250 },
-          { w: 300, h: 600 }
-      ];
+        var applyAd = function() {
+            // Defines Prebid and its command queue
+            var pbjs = pbjs || {};
+            pbjs.que = pbjs.que || [];
+          
+             adUnitName = document.getElementById("input-adUnitName").value;
+            var adUnitSizes = [
+                { w: 320, h: 50 },
+                { w: 300, h: 50 },
+                { w: 300, h: 250 },
+                { w: 300, h: 600 }
+            ];
+    
+            // Dynamically inserts Postbid iframe into Postbid tag
+            var iframe = document.createElement('iframe');
+            iframe.setAttribute('id', adUnitName);
+            iframe.setAttribute('FRAMEBORDER', '0');
+            iframe.setAttribute('SCROLLING', 'no');
+            iframe.setAttribute('MARGINHEIGHT', '0');
+            iframe.setAttribute('MARGINWIDTH', '0');
+            iframe.setAttribute('TOPMARGIN', '0');
+            iframe.setAttribute('LEFTMARGIN', '0');
+            iframe.setAttribute('ALLOWTRANSPARENCY', 'true');
+            iframe.setAttribute('WIDTH', '0');
+            iframe.setAttribute('HEIGHT', '0');
+            document.body.appendChild(iframe);
 
-      // Dynamically inserts Postbid iframe into Postbid tag
-      var iframe = document.createElement('iframe');
-      iframe.setAttribute('id', adUnitName);
-      iframe.setAttribute('FRAMEBORDER', '0');
-      iframe.setAttribute('SCROLLING', 'no');
-      iframe.setAttribute('MARGINHEIGHT', '0');
-      iframe.setAttribute('MARGINWIDTH', '0');
-      iframe.setAttribute('TOPMARGIN', '0');
-      iframe.setAttribute('LEFTMARGIN', '0');
-      iframe.setAttribute('ALLOWTRANSPARENCY', 'true');
-      iframe.setAttribute('WIDTH', '0');
-      iframe.setAttribute('HEIGHT', '0');
-      document.body.appendChild(iframe);
- 
-      // Fires the contained code when Prebid is ready
-      pbjs.que.push(function() {
+            pbjs.que.push(function() {
+                // Requests bids from Demand Manager -- callback function fires on 
+                pbjs.rp.requestBids({
+                    slotMap: [
+                        { name: adUnitName, sizes: adUnitSizes }
+                    ],
+                    callback: function() {
 
-          // Requests bids from Demand Manager -- callback function fires on 
-          pbjs.rp.requestBids({
-              slotMap: [
-                  { name: adUnitName, sizes: adUnitSizes }
-              ],
-              callback: function() {
-
-                  // Gets Postbid iframe
-                  var iframe = document.getElementById(adUnitName);
-                  var iframeDoc = iframe.contentWindow.document;
-
-                  // Gets any ad server targeting key/values from auction
-                  var adServerTargeting = pbjs.getAdserverTargetingForAdUnitCode(adUnitName);
-                  console.log('pbjs', pbjs);
-                  console.log('adServerTargeting', adServerTargeting);
-                  // Renders ad if bidders return any creatives
-                  if (adServerTargeting && adServerTargeting['hb_adid']) {
-                      pbjs.renderAd(iframeDoc, adServerTargeting['hb_adid']);
-                  } else {
-                      // Else renders the passback HTML tag
-                      iframe.width = adUnitSizes[0].w;
-                      iframe.height = adUnitSizes[0].h;
-                      iframeDoc.write('<head></head><body>' + passbackTagHtml + '</body>');
-                      iframeDoc.close();
-                  }
-              }
-          });
-      });
-
+                        // Gets Postbid iframe
+                        var iframe = document.getElementById(adUnitName);
+                        var iframeDoc = iframe.contentWindow.document;
+    
+                        // Gets any ad server targeting key/values from auction
+                        var adServerTargeting = pbjs.getAdserverTargetingForAdUnitCode(adUnitName);
+                        console.log('pbjs', pbjs);
+                        console.log('adServerTargeting', adUnitName, adServerTargeting);
+                        // Renders ad if bidders return any creatives
+                        if (adServerTargeting && adServerTargeting['hb_adid']) {
+                            pbjs.renderAd(iframeDoc, adServerTargeting['hb_adid']);
+                        } else {
+                            // Else renders the passback HTML tag
+                            iframe.width = adUnitSizes[0].w;
+                            iframe.height = adUnitSizes[0].h;
+                            iframeDoc.write('<head></head><body>' + passbackTagHtml + '</body>');
+                            iframeDoc.close();
+                        }
+                    }
+                });
+            });
+        }
+        
+        element.src = scriptURL;
+        element.id = scriptId;
+        element.onload = () => {
+          element.setAttribute('completed', 'true');
+          console.log('script loaded', scriptURL);
+          applyAd();
+        };
+        element.onerror = (e) => {
+          element.setAttribute('failed', 'true');
+          alert('script load failed' + scriptURL);
+        };
+        const parentElement = document.body;
+        parentElement.appendChild(element);
+      }
       /**
        * ! NOTE: Define your passback HTML tag below.
        */
