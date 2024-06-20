@@ -10,11 +10,11 @@
     <h2>Postbid sample</h2>
     <div style="margin: 10px 0">
         <label for="scriptURL">Postbid script URL:</label>
-        <input type="text" id="input-scriptURL" name="scriptURL" value="https:////ads.rubiconproject.com/prebid/17178_fcinter1908_it.js" style="width: 320px">
+        <input type="text" id="input-scriptURL" name="scriptURL" value="https:////ads.rubiconproject.com/prebid/17178_fcinter1908_it.js" style="width: 450px; padding: 3px 5px">
     </div>
-    <div style="margin: 10px 0">
+    <div style="margin: 20px 0">
         <label for="adUnitName">Ad unit name:</label>
-        <input type="text" id="input-adUnitName" name="adUnitName" value="Postbid_300x250" style="width: 320px">
+        <input type="text" id="input-adUnitName" name="adUnitName" value="Postbid_300x250" style="width: 450px; margin-left: 35px; padding: 3px 5px">
     </div>
     <button onclick="apply()">Apply</button>
     
@@ -28,19 +28,19 @@
         if (oldIframe) {
             oldIframe.remove();
         }
+        delete pbjs;
       
         if (scriptElement) {
             scriptElement.remove();
         }
+       // Defines Prebid and its command queue
+        var pbjs = pbjs || {};
+        pbjs.que = pbjs.que || [];
         var scriptURL = document.getElementById("input-scriptURL").value;
         var element = window.document.createElement('script');
 
         var applyAd = function() {
-            // Defines Prebid and its command queue
-            var pbjs = pbjs || {};
-            pbjs.que = pbjs.que || [];
-          
-             adUnitName = document.getElementById("input-adUnitName").value;
+            adUnitName = document.getElementById("input-adUnitName").value;
             var adUnitSizes = [
                 { w: 320, h: 50 },
                 { w: 300, h: 50 },
