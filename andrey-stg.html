@@ -12,10 +12,16 @@
 
   <body>
     <div style="background: lightblue; height: 1000px;">
-      <label for="widht">Width of apester unit element (min320):</label>
-      <input type="number" id="input-width" name="widht" min="320" value="800">
-      <button onclick="applyWidth()">Apply</button>
-      <div style="width: 800px; background-color: green; min-height: 400px; margin-top: 20px" class="wrap">
+      <div>
+        <label for="widht">Width of apester unit element (min 300):</label>
+        <input type="number" id="input-width" name="widht" min="300" value="1000">
+      </div>
+       <div style="margin: 20px 0">
+        <label for="height">Height of apester unit element (min 250):</label>
+        <input type="text" id="input-height" name="height" value="600">
+      </div>
+      <button onclick="apply()">Apply</button>
+      <div style="width: 800px; background-color: green; margin-top: 20px" class="wrap">
         <div class="apester-media" data-token="6379fc73f0bb79000eec2af5" data-context="true" data-tags="" data-fallback="true" height="350"></div>
         <!-- <div class="apester-media" data-media-id="63921955557437002a654c3c"> -->
         <a href="http://www.w3.org/TR/1998/REC-DOM-Level-1-Attr" title="Permetatorem ipsum dolor sit amet, consectetur adipiscing elit. Excepteur sint, sunt in culpa qui officia deser">link</a>
@@ -41,8 +47,9 @@
      
        </div>
        <script>
-        function applyWidth() {
+        function apply() {
           document.querySelector('.wrap').style.width = document.getElementById("input-width").value + 'px';
+	  document.querySelector('.wrap').style.height = document.getElementById("input-height").value + 'px';
           document.querySelector('.apester-media').innerHTML = '';
           window.APESTER.apesterElements = [];
           window.APESTER.reload();
