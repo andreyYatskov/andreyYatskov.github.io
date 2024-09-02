@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <h2>Test page for Alpha</h2>
+    <div style="background: lightblue; height: 1000px; padding: 5px">
+      <div>
+        <label for="widht">Width of apester unit element (min320):</label>
+        <input type="number" id="input-width" name="widht" min="320" value="800">
+      </div>
+       <div style="margin: 20px 0">
+        <label for="interactionId">Interaction id:</label>
+        <input type="text" id="input-interaction" name="interactionId" value="627917cdc21abb002a5e42e0" style="width: 306px">
+      </div>
+      <button onclick="apply()">Apply</button>
+      <div style="width: 800px; background-color: green; min-height: 400px; margin-top: 20px" class="wrap">
+        <div class="apester-media" data-media-id="627917cdc21abb002a5e42e0"></div>
+        <a href="http://www.w3.org/TR/1998/REC-DOM-Level-1-Attr" title="Permetatorem ipsum dolor sit amet, consectetur adipiscing elit. Excepteur sint, sunt in culpa qui officia deser">link</a>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mi bibendum neque egestas congue quisque egestas diam in arcu. Commodo viverra maecenas accumsan lacus vel facilisis volutpat est. Est lorem ipsum dolor sit amet consectetur adipiscing elit. Vitae purus faucibus ornare suspendisse sed nisi. Amet luctus venenatis lectus magna fringilla urna porttitor rhoncus. Nisi vitae suscipit tellus mauris a diam maecenas sed. Vel elit scelerisque mauris pellentesque pulvinar. Pellentesque habitant morbi tristique senectus et. Leo a diam sollicitudin tempor id eu nisl nunc mi. Est pellentesque elit ullamcorper dignissim cras. Tellus cras adipiscing enim eu turpis egestas pretium aenean. Senectus et netus et malesuada fames ac turpis. Mattis molestie a iaculis at erat pellentesque. In ante metus dictum at tempor commodo. Arcu non sodales neque sodales. Quis ipsum suspendisse ultrices gravida dictum. Vehicula ipsum a arcu cursus vitae congue. Purus gravida quis blandit turpis.</p>
+ 
+        <script type="module" src="https://sdk.apester.com/web-sdk.core.lite.min.js"></script>
+     
+       </div>
+       <script>
+        function apply() {
+          document.querySelector('.wrap').style.width = document.getElementById("input-width").value + 'px';
+          const apesterMediaElement = document.querySelector('.apester-media');
+          apesterMediaElement.innerHTML = '';
+          apesterMediaElement.setAttribute('data-media-id', document.getElementById("input-interaction").value);
+          window.APESTER.apesterElements = [];
+          window.APESTER.reload();
+        }
+      </script>
+    </div>
+  </body>
+</html>
