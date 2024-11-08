@@ -12,8 +12,8 @@
     <script>
       console.warn('test  iframe js is loaded');
       console.warn(' window.location.ancestorOrigins', window.location.ancestorOrigins);
-      console.warn('window.location', window.location);
-      console.warn('window.parent.location', window.parent.location, window.location.origin !== window.parent.location.origin);
+      // console.warn('window.location', window.location);
+      console.warn('location.origin === parent.location.origin',  location.origin === parent.location.origin);
       console.warn('document.referrer', document.referrer);
       console.warn('document.location', document.location);
      
