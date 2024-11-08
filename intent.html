@@ -10,9 +10,27 @@
 
   <body>
     <div style="background: lightblue; height: 150vh;">
-      <div class="apester-media" data-token="627b9ec4e7a5a1000e863876" data-context="true" data-tags="" data-fallback="true" height="350"></div>
-      <script type="module" src="https://sdk.andrey.apester.dev/web-sdk.core.min.js"></script>
-      <script nomodule src="https://sdk.andrey.apester.dev/web-sdk.core.legacy.min.js" async></script>
+         <!-- <div class="apester-media" data-media-id="65ef02016ab405d764a74d87"></div> -->
+          <div class="apester-media-65ef02016ab405d764a74d87" style="height: 380px; max-width: 600px;">
+          <script>
+            const iframe = document.createElement("iframe");
+            iframe.classList.add('apester-content');
+            iframe.height = '100%';
+            iframe.frameBorder = '0';
+            iframe.scrolling = '0';
+            fetch('https://andreyyatskov.github.io/iframe.html').then((content) => {
+              return content.text();
+            }).then((html) => {
+              iframe.contentWindow.document.open('text/html', 'replace');
+              iframe.extensionData = {
+                autoFullScreen: false,
+              };
+              iframe.contentDocument.write(html);
+              iframe.contentDocument.close();
+            }).catch((err) => {
+              console.err('err', err);
+            });
+            document.querySelector('.apester-media-65ef02016ab405d764a74d87').appendChild(iframe);
     </div>
   </body>
 </html>
