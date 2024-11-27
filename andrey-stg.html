@@ -17,9 +17,9 @@
 <script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 	cookieconsent.run({"notice_banner_type":"headline","consent_type":"express","palette":"dark","language":"en","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false, "callbacks": {
-	    "notice_banner_loaded": () => { console.warn('banner loaded') },
+	    "notice_banner_loaded": () => { console.warn('banner loaded and apply') },
 	    "i_agree_button_clicked": () => { console.warn('i_agree_button_clicked and apply'); apply(); }, 
-	    "i_decline_button_clicked": () => { console.warn('i_decline_button_clicked') },    
+	    "i_decline_button_clicked": () => { console.warn('i_decline_button_clicked'); apply(); },    
 	}});
 });	
 </script>
