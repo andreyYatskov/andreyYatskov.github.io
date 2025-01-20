@@ -9,6 +9,7 @@
       const href = new URL(location.href);
       const adSlot = href.searchParams.get('adslot') || '/57806026/Amazon_abendzeitung-muenchen.de_MW_320x50_BA';
       const adSize = href.searchParams.get('adsize') ||'320x50';
+      const useRise = href.searchParams.get('userise') || true;
       window.googletag = window.googletag || { cmd: [] };
 
       googletag.cmd.push(function() {
@@ -55,13 +56,17 @@
         <input type="text" id="input-adslot" name="adSlot" style="width: 500px">
       </div>
        <div style="margin: 10px 0">
-         <label>Ad size:</label>
-          <select id="input-adsize">
+         <label for="adSize">Ad size:</label>
+          <select id="input-adsize" name="adSize">
               <option value="320x50">320x50</option>
               <option value="320x250">320x250</option>
               <option value="160x600">160x600</option>
           </select>
-       </div>  
+      </div>
+      <div style="margin: 10px 0">
+        <label for="useRise">Use rise:</label>
+        <input type="checkbox" id="input-rise" name="useRise">
+      </div>
       <button onclick="apply()">Apply</button>
       <div style="background: lightslategrey; height:300px; width: 1000px; margin-top: 20px">
         <div id="test-ad"></div>
@@ -76,9 +81,12 @@
    <script>
       document.getElementById('input-adslot').value = adSlot;
       document.getElementById('input-adsize').value = adSize;
+      document.getElementById('input-useRise').checked = useRise;
       function apply() {
   
         href.searchParams.set('adslot', document.getElementById("input-adslot").value);
+        href.searchParams.set('adsize', document.getElementById("input-adsize").value);
+        href.searchParams.set('userise', document.getElementById("input-rise").checked);
         document.location = href.toString();
       }
     </script>
