@@ -49,16 +49,12 @@
   <body>
     <h2>Test page for Rise</h2>
     <div style="background: lightblue; height: 1000px; padding: 5px">
-      <div>
-        <label for="widht">Width of apester unit element (min320):</label>
-        <input type="number" id="input-width" name="widht" min="320" value="1200">
-      </div>
        <div style="margin: 20px 0">
         <label for="adSlot">Ad slot:</label>
         <input type="text" id="input-adslot" name="adSlot" style="width: 500px">
       </div>
       <button onclick="apply()">Apply</button>
-      <div style="background: lightslategrey; height:300px; width: 1000px;">
+      <div style="background: lightslategrey; height:300px; width: 1000px; margin-top: 20px">
         <div id="test-ad"></div>
         <script>
           googletag.cmd.push(function () {
