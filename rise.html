@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rise Ad Example</title>
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    <script>
+      window.googletag = window.googletag || { cmd: [] };
+
+      googletag.cmd.push(function() {
+        googletag.pubads().disableInitialLoad();
+        googletag.defineSlot("/57806026/Amazon_abendzeitung-muenchen.de_MW_320x50_BA", [320, 50], "test-ba").addService(googletag.pubads());
+        googletag.defineSlot("/57806026,26932497/abendzeitung-muenchen.de_MW_300x250_Com_RTK", [[300,100], [320, 250]], "test-dt").addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+
+      window.googletag.cmd.push(() => {
+        if (window.googletag.apiReady) {
+          console.warn('Gpt api is ready');
+          ['slotRequested', 'slotResponseReceived', 'slotRenderEnded'].forEach((eventName) => {
+            window.googletag.pubads().addEventListener(eventName, (event) => {
+              const { slot } = event;
+              const slotId = slot.getSlotElementId();
+              console.warn(eventName, slotId, 'getResponseInformation' in slot ? slot.getResponseInformation() : '');
+            });
+          });
+        } else {
+          console.warn('Gpt error - api isnot ready');
+        }
+      });
+    </script>
+    <script>
+      window.riseCallback = function (error, instance) {
+        console.warn('riseCallback', { error, instance });
+        if (error) {
+          // ignore
+        }
+        AUCTION_INSTANCE = instance;
+        instance.on('AdImpression', function (data) {
+          console.warn('IMPRESSION CALLBACK:', JSON.stringify(data, null, 2));
+        });
+      };
+    </script>
+    <script src='https://sdk.rfunbox.com/sdk/auction.loader.js?id=676ae5642de1d50001d4b69c&org=5857d2ee263dc90002000001&auction_callback=riseCallback'></script>
+  </head>
+  <body>
+    <div style="background: lightslategrey; height:300px; width: 1000px; margin-bottom: 20px">
+      <div id="test-dt"></div>
+      <script>
+        googletag.cmd.push(function () {
+          googletag.display('test-dt');
+          console.warn('display test dt');
+        });
+      </script>
+    </div>
+    <div style="background: lightgoldenrodyellow; height: 100px; width: 1000px">
+      <div id="test-ba"></div>
+      <script>
+        googletag.cmd.push(function () {
+          googletag.display('test-ba');
+          console.warn('display test ba');
+        });
+      </script>
+    </div>
+  </body>
+</html>
