@@ -8,11 +8,12 @@
     <script>
       const href = new URL(location.href);
       const adSlot = href.searchParams.get('adslot') || '/57806026/Amazon_abendzeitung-muenchen.de_MW_320x50_BA';
+      const adSize = href.searchParams.get('adsize') ||'320x50';
       window.googletag = window.googletag || { cmd: [] };
 
       googletag.cmd.push(function() {
         googletag.pubads().disableInitialLoad();
-        googletag.defineSlot(adSlot, [320, 50], "test-ad").addService(googletag.pubads());
+        googletag.defineSlot(adSlot, adSize.split('x'), "test-ad").addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
@@ -49,10 +50,18 @@
   <body>
     <h2>Test page for Rise</h2>
     <div style="background: lightblue; height: 1000px; padding: 5px">
-       <div style="margin: 20px 0">
+       <div style="margin: 10px 0">
         <label for="adSlot">Ad slot:</label>
         <input type="text" id="input-adslot" name="adSlot" style="width: 500px">
       </div>
+       <div style="margin: 10px 0">
+         <label>Ad size:</label>
+          <select id="input-adsize">
+              <option value="320x50">320x50</option>
+              <option value="320x250">320x250</option>
+              <option value="160x600">160x600</option>
+          </select>
+       </div>  
       <button onclick="apply()">Apply</button>
       <div style="background: lightslategrey; height:300px; width: 1000px; margin-top: 20px">
         <div id="test-ad"></div>
@@ -66,6 +75,7 @@
     </div>
    <script>
       document.getElementById('input-adslot').value = adSlot;
+      document.getElementById('input-adsize').value = adSize;
       function apply() {
   
         href.searchParams.set('adslot', document.getElementById("input-adslot").value);
