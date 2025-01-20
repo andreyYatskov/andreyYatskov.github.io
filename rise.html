@@ -8,7 +8,7 @@
     <script>
       const href = new URL(location.href);
       const adSlot = href.searchParams.get('adslot') || '/57806026/Amazon_abendzeitung-muenchen.de_MW_320x50_BA';
-      const adSize = href.searchParams.get('adsize') ||'320x50';
+      const adSize = href.searchParams.get('adsize') || '320x50';
       const useRise = href.searchParams.get('userise') === 'false' ? false : true;
       window.googletag = window.googletag || { cmd: [] };
 
