@@ -9,11 +9,13 @@
       const href = new URL(location.href);
       const adSlot = href.searchParams.get('adslot') || '/57806026/Amazon_abendzeitung-muenchen.de_MW_320x50_BA';
       const adSize = href.searchParams.get('adsize') ||'320x50';
-      const useRise = href.searchParams.get('userise') || true;
+      const useRise = href.searchParams.get('userise') === 'false' ? false : true;
       window.googletag = window.googletag || { cmd: [] };
 
       googletag.cmd.push(function() {
-        googletag.pubads().disableInitialLoad();
+        if (useRise) {  
+          googletag.pubads().disableInitialLoad();
+        }  
         googletag.defineSlot(adSlot, adSize.split('x'), "test-ad").addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
@@ -35,18 +37,26 @@
       });
     </script>
     <script>
-      window.riseCallback = function (error, instance) {
-        console.warn('riseCallback', { error, instance });
-        if (error) {
-          // ignore
-        }
-        AUCTION_INSTANCE = instance;
-        instance.on('AdImpression', function (data) {
-          console.warn('IMPRESSION CALLBACK:', JSON.stringify(data, null, 2));
-        });
-      };
+      if (useRise) {
+        window.riseCallback = function (error, instance) {
+          console.warn('riseCallback', { error, instance });
+          if (error) {
+            // ignore
+          }
+          AUCTION_INSTANCE = instance;
+          instance.on('AdImpression', function (data) {
+            console.warn('IMPRESSION CALLBACK:', JSON.stringify(data, null, 2));
+          });
+        };
+        var riseScript = document.createElement('script');
+        riseScript.onload = function () {
+           console.warn('Rise script loaded');
+        };
+        riseScript.src = 'https://sdk.rfunbox.com/sdk/auction.loader.js?id=676ae5642de1d50001d4b69c&org=5857d2ee263dc90002000001&auction_callback=riseCallback';
+
+        document.head.appendChild(riseScript); 
+      }
     </script>
-    <script src='https://sdk.rfunbox.com/sdk/auction.loader.js?id=676ae5642de1d50001d4b69c&org=5857d2ee263dc90002000001&auction_callback=riseCallback'></script>
   </head>
   <body>
     <h2>Test page for Rise</h2>
@@ -81,7 +91,7 @@
    <script>
       document.getElementById('input-adslot').value = adSlot;
       document.getElementById('input-adsize').value = adSize;
-      document.getElementById('input-useRise').checked = useRise;
+      document.getElementById('input-rise').checked = useRise;
       function apply() {
   
         href.searchParams.set('adslot', document.getElementById("input-adslot").value);
