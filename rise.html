@@ -16,7 +16,7 @@
         if (useRise) {  
           googletag.pubads().disableInitialLoad();
         }  
-        googletag.defineSlot(adSlot, adSize.split('x'), "test-ad").addService(googletag.pubads());
+        googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), "test-ad").addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
