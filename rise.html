@@ -6,12 +6,13 @@
     <title>Rise Ad Example</title>
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <script>
+      const href = new URL(location.href);
+      const adSlot = href.searchParams.get('adslot') || '/57806026/Amazon_abendzeitung-muenchen.de_MW_320x50_BA';
       window.googletag = window.googletag || { cmd: [] };
 
       googletag.cmd.push(function() {
         googletag.pubads().disableInitialLoad();
-        googletag.defineSlot("/57806026/Amazon_abendzeitung-muenchen.de_MW_320x50_BA", [320, 50], "test-ba").addService(googletag.pubads());
-        googletag.defineSlot("/57806026,26932497/abendzeitung-muenchen.de_MW_300x250_Com_RTK", [[300,100], [320, 250]], "test-dt").addService(googletag.pubads());
+        googletag.defineSlot(adSlot, [320, 50], "test-ad").addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
@@ -46,23 +47,34 @@
     <script src='https://sdk.rfunbox.com/sdk/auction.loader.js?id=676ae5642de1d50001d4b69c&org=5857d2ee263dc90002000001&auction_callback=riseCallback'></script>
   </head>
   <body>
-    <div style="background: lightslategrey; height:300px; width: 1000px; margin-bottom: 20px">
-      <div id="test-dt"></div>
-      <script>
-        googletag.cmd.push(function () {
-          googletag.display('test-dt');
-          console.warn('display test dt');
-        });
-      </script>
+    <h2>Test page for Rise</h2>
+    <div style="background: lightblue; height: 1000px; padding: 5px">
+      <div>
+        <label for="widht">Width of apester unit element (min320):</label>
+        <input type="number" id="input-width" name="widht" min="320" value="1200">
+      </div>
+       <div style="margin: 20px 0">
+        <label for="adSlot">Ad slot:</label>
+        <input type="text" id="input-adslot" name="adSlot" style="width: 500px">
+      </div>
+      <button onclick="apply()">Apply</button>
+      <div style="background: lightslategrey; height:300px; width: 1000px;">
+        <div id="test-ad"></div>
+        <script>
+          googletag.cmd.push(function () {
+            googletag.display('test-ad');
+            console.warn('display test ad ');
+          });
+        </script>
+      </div>
     </div>
-    <div style="background: lightgoldenrodyellow; height: 100px; width: 1000px">
-      <div id="test-ba"></div>
-      <script>
-        googletag.cmd.push(function () {
-          googletag.display('test-ba');
-          console.warn('display test ba');
-        });
-      </script>
-    </div>
+   <script>
+      document.getElementById('input-adslot').value = adSlot;
+      function apply() {
+  
+        href.searchParams.set('adslot', document.getElementById("input-adslot").value);
+        document.location = href.toString();
+      }
+    </script>
   </body>
 </html>
