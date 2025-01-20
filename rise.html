@@ -10,6 +10,8 @@
       const adSlot = href.searchParams.get('adslot') || '/57806026/Amazon_abendzeitung-muenchen.de_MW_320x50_BA';
       const adSize = href.searchParams.get('adsize') || '320x50';
       const useRise = href.searchParams.get('userise') === 'false' ? false : true;
+
+      
       window.googletag = window.googletag || { cmd: [] };
 
       googletag.cmd.push(function() {
@@ -83,7 +85,7 @@
         <script>
           googletag.cmd.push(function () {
             googletag.display('test-ad');
-            console.warn('display test ad ');
+            console.warn('googletag.display test ad', adSlot);
           });
         </script>
       </div>
