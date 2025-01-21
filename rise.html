@@ -19,8 +19,7 @@
       googletag.cmd.push(function() {
         if (useRise) {  
           googletag.pubads().disableInitialLoad();
-        }  
-        googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
+        }
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
@@ -89,9 +88,10 @@
         <input type="checkbox" id="input-callback" name="useCallback">
       </div>
       <button onclick="apply()">Apply</button>
-      <div id="wrapper-ad" style="background: lightslategrey; height:300px; width: 1000px; margin: 20px 0">
-      </div>
-      <button onclick="display()">Display AD</button>
+      <div id="wrapper-ad" style="background: lightslategrey; height:300px; width: 1000px; margin: 20px 0"></div>
+      <button onclick="displayGPT()">Define and display DFP AD slot</button>
+      <br />
+      <button onclick="registerRiseAdSlot()">Register Rise AD slot</button>
     </div>
    <script>
       document.getElementById('input-adslot').value = adSlot;
@@ -103,11 +103,16 @@
       adDiv.id = adId;
       document.getElementById('wrapper-ad').appendChild(adDiv);
 
-      function display() {
+      function displayGPT() {
         googletag.cmd.push(function () {
+          googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
           googletag.display(adId);
           console.warn('googletag.display ad:', adSlot);
         });
+      }
+     
+      function registerRiseAdSlot() {
+        AUCTION_INSTANCE.registerAdSlot('gam', adSlot, adId);
       }
        
       function apply() {
