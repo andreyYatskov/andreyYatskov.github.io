@@ -7,7 +7,8 @@
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <script>
       const href = new URL(location.href);
-      const adSlot = href.searchParams.get('adslot') || '/57806026/Amazon_abendzeitung-muenchen.de_MW_320x50_BA';
+      const adSlot = href.searchParams.get('adslot') || '/57806026,26932497/Amazon_abendzeitung-muenchen.de_MW_300x250_IU';
+      const adId = adSlot.replace(/\/\w*,?\w*\/(Amazon_)?/, '');
       const adSize = href.searchParams.get('adsize') || '320x50';
       const useRise = href.searchParams.get('userise') === 'false' ? false : true;
 
@@ -18,7 +19,7 @@
         if (useRise) {  
           googletag.pubads().disableInitialLoad();
         }  
-        googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), "test-ad").addService(googletag.pubads());
+        googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
@@ -80,22 +81,24 @@
         <input type="checkbox" id="input-rise" name="useRise">
       </div>
       <button onclick="apply()">Apply</button>
-      <div style="background: lightslategrey; height:300px; width: 1000px; margin-top: 20px">
-        <div id="test-ad"></div>
-        <script>
-          googletag.cmd.push(function () {
-            googletag.display('test-ad');
-            console.warn('googletag.display test ad', adSlot);
-          });
-        </script>
+      <div id="wrapper-ad" style="background: lightslategrey; height:300px; width: 1000px; margin-top: 20px">
       </div>
     </div>
    <script>
       document.getElementById('input-adslot').value = adSlot;
       document.getElementById('input-adsize').value = adSize;
       document.getElementById('input-rise').checked = useRise;
+     
+      const adDiv = document.createElement('div');
+      adDiv.id = adId;
+      document.getElementById('wrapper-ad').appendChild(adDiv);
+
+      googletag.cmd.push(function () {
+        googletag.display(adId);
+        console.warn('googletag.display ad:', adSlot);
+      });
+       
       function apply() {
-  
         href.searchParams.set('adslot', document.getElementById("input-adslot").value);
         href.searchParams.set('adsize', document.getElementById("input-adsize").value);
         href.searchParams.set('userise', document.getElementById("input-rise").checked);
