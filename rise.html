@@ -109,9 +109,9 @@
         console.warn('googletag.display ad:', adId);
       });
 
-      const adDiv = document.createElement('div');
-      adDiv.id = adId2;
-      document.getElementById('wrapper-ad').appendChild(adDiv);
+      const adDiv2 = document.createElement('div');
+      adDiv2.id = adId2;
+      document.getElementById('wrapper-ad').appendChild(adDiv2);
        googletag.cmd.push(function () {
         googletag.display(adId2);
         console.warn('googletag.display ad:', adId2);
