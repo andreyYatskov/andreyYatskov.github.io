@@ -12,7 +12,7 @@
       const adSize = href.searchParams.get('adsize') || '320x250';
       const useRise = href.searchParams.get('userise') === 'false' ? false : true;
       const useAuctionCallback = href.searchParams.get('usecallback') === 'false' ? false : true;
-
+      const adId2 = 'Serienjunkies_Playlist_DT_Sidebanner';
       
       window.googletag = window.googletag || { cmd: [] };
 
@@ -20,7 +20,7 @@
         if (useRise) {  
           googletag.pubads().disableInitialLoad();
         }
-        googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
+        googletag.defineSlot(`/57806026/{adId2}', [160, 600], adId2).addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
@@ -32,7 +32,7 @@
             window.googletag.pubads().addEventListener(eventName, (event) => {
               const { slot } = event;
               const slotId = slot.getSlotElementId();
-              console.warn({ eventName, slotId }, 'getResponseInformation' in slot ? slot.getResponseInformation() : '');
+              console.warn('GPT event:', eventName, slotId, 'getResponseInformation' in slot ? slot.getResponseInformation() : '');
             });
           });
         } else {
@@ -106,8 +106,17 @@
       document.getElementById('wrapper-ad').appendChild(adDiv);
        googletag.cmd.push(function () {
         googletag.display(adId);
-        console.warn('googletag.display ad:', adSlot);
+        console.warn('googletag.display ad:', adId);
       });
+
+      const adDiv = document.createElement('div');
+      adDiv.id = adId2;
+      document.getElementById('wrapper-ad').appendChild(adDiv);
+       googletag.cmd.push(function () {
+        googletag.display(adId2);
+        console.warn('googletag.display ad:', adId2);
+      });
+
 
       function displayGPT() {
         googletag.cmd.push(function () {
