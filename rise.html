@@ -15,21 +15,21 @@
       const adId2 = 'Serienjunkies_Playlist_DT_300x250_Com_hv'; //'Serienjunkies_Playlist_DT_Sidebanner';
       
       window.googletag = window.googletag || { cmd: [] };
-
-      googletag.cmd.push(function() {
-        if (useRise) {  
-          googletag.pubads().disableInitialLoad();
-        }
-        googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
-        googletag.pubads().enableSingleRequest();
-        googletag.enableServices();
-      });
       
       googletag.cmd.push(function() {
         if (useRise) {  
           googletag.pubads().disableInitialLoad();
         }
         googletag.defineSlot(`/57806026/${adId2}`, [300, 250], adId2).addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+
+      googletag.cmd.push(function() {
+        if (useRise) {  
+          googletag.pubads().disableInitialLoad();
+        }
+        googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
@@ -109,31 +109,19 @@
       document.getElementById('input-adsize').value = adSize;
       document.getElementById('input-rise').checked = useRise;
       document.getElementById('input-callback').checked = useAuctionCallback;
-     
-      const adDiv = document.createElement('div');
-      adDiv.id = adId;
-      document.getElementById('wrapper-ad').appendChild(adDiv);
-       googletag.cmd.push(function () {
-        googletag.display(adId);
-        console.warn('googletag.display ad:', adId);
-      });
 
-      const adDiv2 = document.createElement('div');
-      adDiv2.id = adId2;
-      document.getElementById('wrapper-ad').appendChild(adDiv2);
-       googletag.cmd.push(function () {
-        googletag.display(adId2);
-        console.warn('googletag.display ad:', adId2);
-      });
-
-
-      function displayGPT() {
+      function createAndDisplayAd(id) {
+        const adDiv = document.createElement('div');
+        adDiv.id = id;
+        document.getElementById('wrapper-ad').appendChild(adDiv);
         googletag.cmd.push(function () {
-  
-          googletag.display(adId);
-          console.warn('googletag.display ad:', adSlot);
+          googletag.display(id);
+          console.warn('googletag.display ad:', id);
         });
       }
+
+     createAndDisplayAd(adId2);
+     createAndDisplayAd(adId);
      
       function registerRiseAdSlot() {
         AUCTION_INSTANCE.registerAdSlot('gam', adSlot, adId);
