@@ -15,12 +15,12 @@
       const adId2 = 'Serienjunkies_Playlist_DT_300x250_Com_hv'; //'Serienjunkies_Playlist_DT_Sidebanner';
       
       window.googletag = window.googletag || { cmd: [] };
-      
+
       googletag.cmd.push(function() {
         if (useRise) {  
           googletag.pubads().disableInitialLoad();
         }
-        googletag.defineSlot(`/57806026/${adId2}`, [300, 250], adId2).addService(googletag.pubads());
+        googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
@@ -29,7 +29,7 @@
         if (useRise) {  
           googletag.pubads().disableInitialLoad();
         }
-        googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
+        googletag.defineSlot(`/57806026/${adId2}`, [300, 250], adId2).addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
@@ -120,8 +120,8 @@
         });
       }
 
-     createAndDisplayAd(adId2);
-     createAndDisplayAd(adId);
+      createAndDisplayAd(adId);
+      createAndDisplayAd(adId2);
      
       function registerRiseAdSlot() {
         AUCTION_INSTANCE.registerAdSlot('gam', adSlot, adId);
