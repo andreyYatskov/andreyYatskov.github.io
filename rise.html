@@ -12,7 +12,7 @@
       const adSize = href.searchParams.get('adsize') || '320x250';
       const useRise = href.searchParams.get('userise') === 'false' ? false : true;
       const useAuctionCallback = href.searchParams.get('usecallback') === 'false' ? false : true;
-      const adId2 = 'Serienjunkies_Playlist_DT_Sidebanner';
+      const adId2 = 'Serienjunkies_Playlist_DT_300x250_Com_hv'; //'Serienjunkies_Playlist_DT_Sidebanner';
       
       window.googletag = window.googletag || { cmd: [] };
 
@@ -29,7 +29,7 @@
         if (useRise) {  
           googletag.pubads().disableInitialLoad();
         }
-        googletag.defineSlot(`/57806026/${adId2}`, [160, 600], adId2).addService(googletag.pubads());
+        googletag.defineSlot(`/57806026/${adId2}`, [300, 250], adId2).addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
       });
