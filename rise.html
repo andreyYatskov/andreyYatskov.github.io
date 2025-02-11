@@ -20,6 +20,15 @@
         if (useRise) {  
           googletag.pubads().disableInitialLoad();
         }
+        googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+      
+      googletag.cmd.push(function() {
+        if (useRise) {  
+          googletag.pubads().disableInitialLoad();
+        }
         googletag.defineSlot(`/57806026/${adId2}`, [160, 600], adId2).addService(googletag.pubads());
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
