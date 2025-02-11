@@ -25,14 +25,14 @@
         googletag.enableServices();
       });
 
-      googletag.cmd.push(function() {
-        if (useRise) {  
-          googletag.pubads().disableInitialLoad();
-        }
-        googletag.defineSlot(`/57806026/${adId2}`, [300, 250], adId2).addService(googletag.pubads());
-        googletag.pubads().enableSingleRequest();
-        googletag.enableServices();
-      });
+      // googletag.cmd.push(function() {
+      //   if (useRise) {  
+      //     googletag.pubads().disableInitialLoad();
+      //   }
+      //   googletag.defineSlot(`/57806026/${adId2}`, [300, 250], adId2).addService(googletag.pubads());
+      //   googletag.pubads().enableSingleRequest();
+      //   googletag.enableServices();
+      // });
 
       window.googletag.cmd.push(() => {
         if (window.googletag.apiReady) {
@@ -121,7 +121,7 @@
       }
 
       createAndDisplayAd(adId);
-      createAndDisplayAd(adId2);
+      // createAndDisplayAd(adId2);
      
       function registerRiseAdSlot() {
         AUCTION_INSTANCE.registerAdSlot('gam', adSlot, adId);
