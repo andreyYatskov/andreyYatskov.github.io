@@ -32,7 +32,7 @@
             window.googletag.pubads().addEventListener(eventName, (event) => {
               const { slot } = event;
               const slotId = slot.getSlotElementId();
-              console.warn(eventName, slotId, 'getResponseInformation' in slot ? slot.getResponseInformation() : '');
+              console.warn({ eventName, slotId }, 'getResponseInformation' in slot ? slot.getResponseInformation() : '');
             });
           });
         } else {
