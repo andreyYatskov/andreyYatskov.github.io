@@ -158,18 +158,20 @@
       }
 
       function refresh() {
+        console.warn('refresh', adslot);
         googletag.cmd.push(() => {
-          googletag.refresh([adSlot]);
+          googletag.pubads().refresh([adSlot]);
           console.warn('googletag.refresh ad:', adSlot);
         });
       }
 
       function remove() {
-        rspbjs.removeAdUnit(adId);
-        // window.googletag.cmd.push(() => {
-        //   window.googletag.pubads().clear([adSlot]);
-        //   window.googletag.destroySlots([adSlot]);
-        // });
+        console.warn('remove', adslot);
+        // rspbjs.removeAdUnit(adId);
+        window.googletag.cmd.push(() => {
+          window.googletag.pubads().clear([adSlot]);
+          window.googletag.destroySlots([adSlot]);
+        });
       }
         
       function apply() {
