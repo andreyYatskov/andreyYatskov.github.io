@@ -158,7 +158,7 @@
       }
 
       function refresh() {
-        console.warn('refresh', adslot);
+        console.warn('refresh', adSlot);
         googletag.cmd.push(() => {
           googletag.pubads().refresh([adSlot]);
           console.warn('googletag.refresh ad:', adSlot);
@@ -166,7 +166,7 @@
       }
 
       function remove() {
-        console.warn('remove', adslot);
+        console.warn('remove', adSlot);
         // rspbjs.removeAdUnit(adId);
         window.googletag.cmd.push(() => {
           window.googletag.pubads().clear([adSlot]);
