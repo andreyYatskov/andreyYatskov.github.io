@@ -7,13 +7,13 @@
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <script>
       const href = new URL(location.href);
-      const adSlot = href.searchParams.get('adslot') || '/57806026,26932497/Amazon_abendzeitung-muenchen.de_MW_300x250_IU';
-      const adId = adSlot.replace(/\/\w*,?\w*\/(Amazon_)?/, '');
+      const adPath = href.searchParams.get('adslot') || '/57806026,26932497/Amazon_abendzeitung-muenchen.de_MW_300x250_IU';
+      const adId = adPath.replace(/\/\w*,?\w*\/(Amazon_)?/, '');
       const adSize = href.searchParams.get('adsize') || '320x250';
       const useRise = href.searchParams.get('userise') === 'false' ? false : true;
       const useAuctionCallback = href.searchParams.get('usecallback') === 'false' ? false : true;
       const adId2 = 'Serienjunkies_Playlist_DT_300x250_Com_hv'; //'Serienjunkies_Playlist_DT_Sidebanner';
-      
+      let adSlot;
       window.googletag = window.googletag || { cmd: [] };
 
       function createGPTSlot(gptPath, sizes, elementId) {
@@ -53,7 +53,7 @@
       window.googletag.cmd.push(() => {
         if (window.googletag.apiReady) {
           console.warn('Gpt api is ready');
-          createGPTSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId);
+          adSlot = createGPTSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId);
           ['slotRequested', 'slotResponseReceived', 'slotRenderEnded'].forEach((eventName) => {
             window.googletag.pubads().addEventListener(eventName, (event) => {
               const { slot } = event;
@@ -116,6 +116,8 @@
       </div>
       <button onclick="apply()">Apply</button>
       <button style="margin: 10px 0" onclick="refresh()">Refresh ad slot</button>
+       <button style="margin: 10px 0" onclick="displayAd()">Display ad slot</button>
+      <button style="margin: 10px 0" onclick="remove()">Delete ad slot</button>
       <div id="wrapper-ad" style="background: lightslategrey; height: 1300px; width: 1000px; margin: 20px 0"></div>
 <!--       <button onclick="displayGPT()" style="margin-bottom: 20px">Define and display DFP AD slot</button> (googletag.defineSlot(adSlot, adSize, adId).addService(googletag.pubads());
           googletag.display(adId);)
@@ -138,6 +140,14 @@
         });
       }
 
+      function displayAd() {
+        adSlot = createGPTSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId);
+        googletag.cmd.push(() => {
+          googletag.display(adId);
+          console.warn('googletag.display ad:', adSlot);
+        });
+      }
+
       createAndDisplayAd(adId);
       // createAndDisplayAd(adId2);
      
@@ -146,9 +156,16 @@
       }
 
       function refresh() {
-        googletag.cmd.push(function () {
+        googletag.cmd.push(() => {
           googletag.refresh([adSlot]);
           console.warn('googletag.refresh ad:', adSlot);
+        });
+      }
+
+      function remove() {
+        window.googletag.cmd.push(() => {
+          window.googletag.pubads().clear([adSlot]);
+          window.googletag.destroySlots([adSlot]);
         });
       }
         
