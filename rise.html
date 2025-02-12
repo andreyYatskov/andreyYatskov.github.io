@@ -6,6 +6,7 @@
     <title>Rise Ad Example</title>
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <script>
+      console.warn('test', 1);
       const href = new URL(location.href);
       const adPath = href.searchParams.get('adslot') || '/57806026,26932497/Amazon_abendzeitung-muenchen.de_MW_300x250_IU';
       const adId = adPath.replace(/\/\w*,?\w*\/(Amazon_)?/, '');
