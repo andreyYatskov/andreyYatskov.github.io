@@ -144,7 +144,7 @@
       function displayAd() {
         // adSlot = createGPTSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId);
         googletag.cmd.push(() => { 
-          adSlot = googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
+          adSlot = googletag.defineSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
           googletag.display(adId);
           console.warn('googletag.display ad:', adSlot);
         });
