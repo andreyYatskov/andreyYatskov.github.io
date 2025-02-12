@@ -16,30 +16,30 @@
       let adSlot;
       window.googletag = window.googletag || { cmd: [] };
 
-      function createGPTSlot(gptPath, sizes, elementId) {
-        window.googletag.pubads().disableInitialLoad();
-        const slot = window.googletag.defineSlot(gptPath, sizes, elementId);
-        console.warn('Create GPT slot', { gptPath, sizes, elementId });
-        if (!slot) {
-          return undefined;
-        }
-        console.warn('Created GPT slot', slot);
-        slot.addService(window.googletag.pubads());
-      
-        // window.googletag.pubads().enableAsyncRendering();
-        window.googletag.enableServices();
-      
-        return slot;
-      }
-
-      // googletag.cmd.push(function() {
-      //   if (useRise) {  
-      //     googletag.pubads().disableInitialLoad();
+      // function createGPTSlot(gptPath, sizes, elementId) {
+      //   window.googletag.pubads().disableInitialLoad();
+      //   const slot = window.googletag.defineSlot(gptPath, sizes, elementId);
+      //   console.warn('Create GPT slot', { gptPath, sizes, elementId });
+      //   if (!slot) {
+      //     return undefined;
       //   }
-      //   googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
-      //   googletag.pubads().enableSingleRequest();
-      //   googletag.enableServices();
-      // });
+      //   console.warn('Created GPT slot', slot);
+      //   slot.addService(window.googletag.pubads());
+      
+      //   // window.googletag.pubads().enableAsyncRendering();
+      //   window.googletag.enableServices();
+      
+      //   return slot;
+      // }
+
+      googletag.cmd.push(function() {
+        if (useRise) {  
+          googletag.pubads().disableInitialLoad();
+        }
+        adSlot = googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
 
       // googletag.cmd.push(function() {
       //   if (useRise) {  
@@ -53,7 +53,7 @@
       window.googletag.cmd.push(() => {
         if (window.googletag.apiReady) {
           console.warn('Gpt api is ready');
-          adSlot = createGPTSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId);
+          // adSlot = createGPTSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId);
           ['slotRequested', 'slotResponseReceived', 'slotRenderEnded'].forEach((eventName) => {
             window.googletag.pubads().addEventListener(eventName, (event) => {
               const { slot } = event;
@@ -141,8 +141,9 @@
       }
 
       function displayAd() {
-        adSlot = createGPTSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId);
-        googletag.cmd.push(() => {
+        // adSlot = createGPTSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId);
+        googletag.cmd.push(() => { 
+          adSlot = googletag.defineSlot(adSlot, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
           googletag.display(adId);
           console.warn('googletag.display ad:', adSlot);
         });
