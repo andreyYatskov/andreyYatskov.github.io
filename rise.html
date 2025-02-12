@@ -17,19 +17,19 @@
       window.googletag = window.googletag || { cmd: [] };
 
       function createGPTSlot(gptPath, sizes, elementId) {
-        const adSlot = window.googletag.defineSlot(gptPath, sizes, elementId);
+        window.googletag.pubads().disableInitialLoad();
+        const slot = window.googletag.defineSlot(gptPath, sizes, elementId);
         console.warn('Create GPT slot', { gptPath, sizes, elementId });
-        if (!adSlot) {
+        if (!slot) {
           return undefined;
         }
-        console.warn('Created GPT slot', adSlot);
-        adSlot.addService(window.googletag.pubads());
+        console.warn('Created GPT slot', slot);
+        slot.addService(window.googletag.pubads());
       
-        window.googletag.pubads().disableInitialLoad();
-        window.googletag.pubads().enableAsyncRendering();
+        // window.googletag.pubads().enableAsyncRendering();
         window.googletag.enableServices();
       
-        return adSlot;
+        return slot;
       }
 
       // googletag.cmd.push(function() {
