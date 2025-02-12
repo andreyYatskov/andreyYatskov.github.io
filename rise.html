@@ -165,10 +165,11 @@
       }
 
       function remove() {
-        window.googletag.cmd.push(() => {
-          window.googletag.pubads().clear([adSlot]);
-          window.googletag.destroySlots([adSlot]);
-        });
+        rspbjs.removeAdUnit(adId);
+        // window.googletag.cmd.push(() => {
+        //   window.googletag.pubads().clear([adSlot]);
+        //   window.googletag.destroySlots([adSlot]);
+        // });
       }
         
       function apply() {
