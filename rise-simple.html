@@ -59,7 +59,6 @@
           ['slotRequested', 'slotResponseReceived', 'slotRenderEnded'].forEach((eventName) => {
             window.googletag.pubads().addEventListener(eventName, (event) => {
               const { slot } = event;
-              adSlot = slot;
               const slotId = slot.getSlotElementId();
               console.warn('GPT event:', eventName, slotId, 'getResponseInformation' in slot ? slot.getResponseInformation() : '');
             });
