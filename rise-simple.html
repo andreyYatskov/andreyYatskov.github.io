@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rise Ad Example</title>
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    <script>
+      console.warn('test', 4);
+      const href = new URL(location.href);
+      const adPath = href.searchParams.get('adslot') || '/57806026,26932497/Amazon_abendzeitung-muenchen.de_MW_300x250_IU';
+      const adId = adPath.replace(/\/\w*,?\w*\/(Amazon_)?/, '');
+      const adSize = href.searchParams.get('adsize') || '320x250';
+      const useRise = href.searchParams.get('userise') === 'false' ? false : true;
+      const useAuctionCallback = href.searchParams.get('usecallback') === 'false' ? false : true;
+      const adId2 = 'serienjunkies.de_DT_320x50_BA_DM'; //'Serienjunkies_Playlist_DT_Sidebanner';
+      let adSlot;
+      window.googletag = window.googletag || { cmd: [] };
+
+      // function createGPTSlot(gptPath, sizes, elementId) {
+      //   window.googletag.pubads().disableInitialLoad();
+      //   const slot = window.googletag.defineSlot(gptPath, sizes, elementId);
+      //   console.warn('Create GPT slot', { gptPath, sizes, elementId });
+      //   if (!slot) {
+      //     return undefined;
+      //   }
+      //   console.warn('Created GPT slot', slot);
+      //   slot.addService(window.googletag.pubads());
+      
+      //   window.googletag.pubads().enableAsyncRendering();
+      //   window.googletag.enableServices();
+      
+      //   return slot;
+      }
+
+      googletag.cmd.push(function() {
+        if (useRise) {  
+          googletag.pubads().disableInitialLoad();
+        }
+        adSlot = googletag.defineSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId);
+        adSlot.addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+
+      // googletag.cmd.push(function() {
+      //   if (useRise) {  
+      //     googletag.pubads().disableInitialLoad();
+      //   }
+      //   googletag.defineSlot(`/57806026/${adId2}`, [300, 50], adId2).addService(googletag.pubads());
+      //   googletag.pubads().enableSingleRequest();
+      //   googletag.enableServices();
+      // });
+
+      window.googletag.cmd.push(() => {
+        if (window.googletag.apiReady) {
+          console.warn('Gpt api is ready');
+          // adSlot = createGPTSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId);
+          ['slotRequested', 'slotResponseReceived', 'slotRenderEnded'].forEach((eventName) => {
+            window.googletag.pubads().addEventListener(eventName, (event) => {
+              const { slot } = event;
+              adSlot = slot;
+              const slotId = slot.getSlotElementId();
+              console.warn('GPT event:', eventName, slotId, 'getResponseInformation' in slot ? slot.getResponseInformation() : '');
+            });
+          });
+        } else {
+          console.warn('Gpt error - api isnot ready');
+        }
+      });
+    </script>
+    <script>
+      if (useRise) {
+        window.riseCallback = function (error, instance) {
+          console.warn('riseCallback', { error, instance });
+          if (error) {
+            // ignore
+          }
+          AUCTION_INSTANCE = instance;
+          instance.on('AdImpression', function (data) {
+            console.warn('IMPRESSION CALLBACK:', JSON.stringify(data, null, 2));
+          });
+        };
+        const riseScript = document.createElement('script');
+        riseScript.onload = function () {
+           console.warn('Rise script loaded');
+        };
+        let riseUrl = 'https://sdk.rfunbox.com/sdk/auction.loader.js?id=676ae5642de1d50001d4b69c&org=5857d2ee263dc90002000001'
+        if (useAuctionCallback) {
+          riseUrl += '&auction_callback=riseCallback';
+        }
+        riseScript.src = riseUrl;
+        document.head.appendChild(riseScript); 
+      }
+    </script>
+  </head>
+  <body>
+    <h2>Test page for Rise</h2>
+    <div style="background: lightblue; height: 1000px; padding: 5px">
+       <div style="margin: 10px 0">
+        <label for="adSlot">Ad slot:</label>
+        <input type="text" id="input-adslot" name="adSlot" style="width: 500px">
+      </div>
+       <div style="margin: 10px 0">
+         <label for="adSize">Ad size:</label>
+          <select id="input-adsize" name="adSize">
+              <option value="320x50">320x50</option>
+              <option value="320x250">320x250</option>
+              <option value="160x600">160x600</option>
+          </select>
+      </div>
+      <div style="margin: 10px 0">
+        <label for="useRise">Attach Rise script:</label>
+        <input type="checkbox" id="input-rise" name="useRise">
+      </div>
+      <div style="margin: 10px 0">
+        <label for="useCallback">Use Rise auction callback:</label>
+        <input type="checkbox" id="input-callback" name="useCallback"> (define window.riseCallback)
+      </div>
+      <button onclick="apply()">Apply</button>
+      <button style="margin: 10px 0" onclick="refresh()">Refresh ad slot</button>
+       <button style="margin: 10px 0" onclick="displayAd()">Display ad slot</button>
+      <button style="margin: 10px 0" onclick="remove()">Delete ad slot</button>
+      <div id="wrapper-ad" style="background: lightslategrey; height: 1300px; width: 1000px; margin: 20px 0"></div>
+<!--       <button onclick="displayGPT()" style="margin-bottom: 20px">Define and display DFP AD slot</button> (googletag.defineSlot(adSlot, adSize, adId).addService(googletag.pubads());
+          googletag.display(adId);)
+      <br />
+      <button onclick="registerRiseAdSlot()">Register Rise AD slot</button> (add dynamically slot AUCTION_INSTANCE.registerAdSlot('gam', adSlot, adId);) -->
+    </div>
+   <script>
+      document.getElementById('input-adslot').value = adPath;
+      document.getElementById('input-adsize').value = adSize;
+      document.getElementById('input-rise').checked = useRise;
+      document.getElementById('input-callback').checked = useAuctionCallback;
+
+      function createAndDisplayAd(id) {
+        const adDiv = document.createElement('div');
+        adDiv.id = id;
+        document.getElementById('wrapper-ad').appendChild(adDiv);
+        googletag.cmd.push(function () {
+          googletag.display(id);
+          console.warn('googletag.display ad:', id);
+        });
+      }
+
+      function displayAd() {
+        // adSlot = createGPTSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId);
+        googletag.cmd.push(() => { 
+          adSlot = googletag.defineSlot(adPath, adSize.split('x').map(x => parseInt(x, 10)), adId).addService(googletag.pubads());
+          googletag.display(adId);
+          console.warn('googletag.display ad:', adSlot);
+        });
+      }
+
+      createAndDisplayAd(adId);
+      // createAndDisplayAd(adId2);
+     
+      function registerRiseAdSlot() {
+        AUCTION_INSTANCE.registerAdSlot('gam', adSlot, adId);
+      }
+
+      function refresh() {
+        console.warn('refresh', adSlot);
+        googletag.cmd.push(() => {
+          googletag.pubads().refresh([adSlot]);
+          console.warn('googletag.refresh ad:', adSlot);
+        });
+      }
+
+      function remove() {
+        console.warn('remove', adSlot);
+        // rspbjs.removeAdUnit(adPath);
+        window.googletag.cmd.push(() => {
+          window.googletag.pubads().clear([adSlot]);
+          console.warn('destroy slot', googletag.destroySlots([adSlot]));
+        });
+      }
+        
+      function apply() {
+        href.searchParams.set('adslot', document.getElementById("input-adslot").value);
+        href.searchParams.set('adsize', document.getElementById("input-adsize").value);
+        href.searchParams.set('userise', document.getElementById("input-rise").checked);
+        href.searchParams.set('usecallback', document.getElementById("input-callback").checked);
+        
+        document.location = href.toString();
+      }
+    </script>
+  </body>
+</html>
