@@ -6,7 +6,7 @@
     <title>Rise Ad Example</title>
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <script>
-      console.warn('test', 3);
+      console.warn('test', 4);
       const href = new URL(location.href);
       const adPath = href.searchParams.get('adslot') || '/57806026,26932497/Amazon_abendzeitung-muenchen.de_MW_300x250_IU';
       const adId = adPath.replace(/\/\w*,?\w*\/(Amazon_)?/, '');
@@ -168,7 +168,7 @@
 
       function remove() {
         console.warn('remove', adSlot);
-        // rspbjs.removeAdUnit(adId);
+        rspbjs.removeAdUnit(adPath);
         window.googletag.cmd.push(() => {
           window.googletag.pubads().clear([adSlot]);
           console.warn('destroy slot', googletag.destroySlots([adSlot]));
