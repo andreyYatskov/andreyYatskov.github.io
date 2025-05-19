@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aniview Display Ad Example</title>
+    <script>
+      console.warn('test', 1);
+      const href = new URL(location.href);
+      const channelId = href.searchParams.get('channelId') || '6824be9ea3f632219c097abc';
+      const publisherId = href.searchParams.get('publisherId') || '6824be58734d7f773200e79e';
+      const adSize = href.searchParams.get('adsize') || '300x250';
+  
+    </script>
+  </head>
+  <body>
+    <h2>Test page for Aniview Display</h2>
+    <div style="background: lightblue; height: 1000px; padding: 5px">
+       <div style="margin: 10px 0">
+        <label for="channel">Channel ID:</label>
+        <input type="text" id="input-channel" name="channel" style="width: 500px">
+      </div>
+      <div style="margin: 10px 0">
+        <label for="publisher">Publisher ID:</label>
+        <input type="text" id="input-publisher" name="publisher" style="width: 500px">
+      </div>
+       <div style="margin: 10px 0">
+         <label for="adSize">Ad size:</label>
+          <select id="input-adsize" name="adSize">
+              <option value="320x50">320x50</option>
+              <option value="300x250">300x250</option>
+          </select>
+      </div>
+      <button onclick="apply()">Apply</button>
+      <button style="margin: 10px 0" onclick="refresh()">Refresh ad slot</button>
+<!--       <button style="margin: 10px 0" onclick="displayAd()">Display ad slot</button>
+      <button style="margin: 10px 0" onclick="remove()">Delete ad slot</button> -->
+      <div id="wrapper-ad" style="background: lightslategrey; height: 1300px; width: 1000px; margin: 20px 0">
+        <div id="aniplayer"></div>
+      </div>
+
+    </div>
+     <script>
+        document.getElementById('input-channel').value = channelId;
+        document.getElementById('input-publisher').value = publisherId;
+        document.getElementById('input-adsize').value = adSize;
+
+         (function() {
+            const [width, height] = adSize.split('x');
+            var placementConfig = {
+              publisherId,
+              channelId,
+              ref1:             '',
+              width:            parseInt(width, 10),
+              height:           parseInt(height, 10),
+              errorLimit:       5,
+              position:         'aniplayer',
+              debug:            true,
+            };
+            (new Image).src = "https://track1.aniview.com/track?pid="+placementConfig.publisherId+"&cid="+placementConfig.channelId+"&e=playerLoaded"+"&cb="+Date.now();
+            var scriptUrl = 'https://player.aniview.com/script/layout-manager/stable/avlm.js'+'?v=1&type=s&pid='+placementConfig.publisherId;  
+            function downloadScript(src, adData) {
+              var scp = document.createElement('script');
+              scp.src = src;
+              scp.onload = function() {
+                  console.warn('avLayoutManager', avLayoutManager);
+                  avLayoutManager.createPlacement('display', adData).then(function (placement) {
+                    console.warn('display placement', placement);
+                    placement.on("AdImpression", function (event) {
+                      console.warn('on AdImpressionment', event);
+                    });
+                    placement.on("AdError", function (event) {
+                      console.warn('on AdError', event);
+                    });
+                  });
+                };
+              document.getElementsByTagName('head')[0].appendChild(scp);
+              };
+              downloadScript(scriptUrl, placementConfig);  
+          })();
+      }
+    </script>
+    <script>
+        
+      function apply() {
+        href.searchParams.set('channelId', document.getElementById("input-channel").value);
+        href.searchParams.set('publisherId', document.getElementById("input-publisher").value);
+        href.searchParams.set('adsize', document.getElementById("input-adsize").value);
+        document.location = href.toString();
+      }
+    </script>
+  </body>
+</html>
