@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Aniview Display Ad Example</title>
     <script>
-      console.warn('test', 1);
+      console.warn('test', 2);
       const href = new URL(location.href);
       const channelId = href.searchParams.get('channelId') || '6824be9ea3f632219c097abc';
       const publisherId = href.searchParams.get('publisherId') || '6824be58734d7f773200e79e';
@@ -40,45 +40,44 @@
       </div>
 
     </div>
-     <script>
-        document.getElementById('input-channel').value = channelId;
-        document.getElementById('input-publisher').value = publisherId;
-        document.getElementById('input-adsize').value = adSize;
+    <script>
+      document.getElementById('input-channel').value = channelId;
+      document.getElementById('input-publisher').value = publisherId;
+      document.getElementById('input-adsize').value = adSize;
 
-         (function() {
-            const [width, height] = adSize.split('x');
-            var placementConfig = {
-              publisherId,
-              channelId,
-              ref1:             '',
-              width:            parseInt(width, 10),
-              height:           parseInt(height, 10),
-              errorLimit:       5,
-              position:         'aniplayer',
-              debug:            true,
+      (function() {
+        const [width, height] = adSize.split('x');
+        var placementConfig = {
+          publisherId,
+          channelId,
+          ref1:             '',
+          width:            parseInt(width, 10),
+          height:           parseInt(height, 10),
+          errorLimit:       5,
+          position:         'aniplayer',
+          debug:            true,
+        };
+        (new Image).src = "https://track1.aniview.com/track?pid="+placementConfig.publisherId+"&cid="+placementConfig.channelId+"&e=playerLoaded"+"&cb="+Date.now();
+        var scriptUrl = 'https://player.aniview.com/script/layout-manager/stable/avlm.js'+'?v=1&type=s&pid='+placementConfig.publisherId;  
+        function downloadScript(src, adData) {
+          var scp = document.createElement('script');
+          scp.src = src;
+          scp.onload = function() {
+              console.warn('avLayoutManager', avLayoutManager);
+              avLayoutManager.createPlacement('display', adData).then(function (placement) {
+                console.warn('display placement', placement);
+                placement.on("AdImpression", function (event) {
+                  console.warn('on AdImpressionment', event);
+                });
+                placement.on("AdError", function (event) {
+                  console.warn('on AdError', event);
+                });
+              });
             };
-            (new Image).src = "https://track1.aniview.com/track?pid="+placementConfig.publisherId+"&cid="+placementConfig.channelId+"&e=playerLoaded"+"&cb="+Date.now();
-            var scriptUrl = 'https://player.aniview.com/script/layout-manager/stable/avlm.js'+'?v=1&type=s&pid='+placementConfig.publisherId;  
-            function downloadScript(src, adData) {
-              var scp = document.createElement('script');
-              scp.src = src;
-              scp.onload = function() {
-                  console.warn('avLayoutManager', avLayoutManager);
-                  avLayoutManager.createPlacement('display', adData).then(function (placement) {
-                    console.warn('display placement', placement);
-                    placement.on("AdImpression", function (event) {
-                      console.warn('on AdImpressionment', event);
-                    });
-                    placement.on("AdError", function (event) {
-                      console.warn('on AdError', event);
-                    });
-                  });
-                };
-              document.getElementsByTagName('head')[0].appendChild(scp);
-              };
-              downloadScript(scriptUrl, placementConfig);  
-          })();
-      }
+          document.getElementsByTagName('head')[0].appendChild(scp);
+          };
+          downloadScript(scriptUrl, placementConfig);  
+      })();
     </script>
     <script>
         
